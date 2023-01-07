@@ -3,6 +3,7 @@
 const { default: axios } = require("axios");
 const express = require("express");
 const path = require("path");
+const { getReq } = require("./utils/axios");
 // initiate
 const app = express();
 
@@ -16,18 +17,7 @@ app.set("views", path.join(__dirname, "views"));
 
 // router
 app.get("/", (req, res) => {
-  axios
-    .get("https://api.ipify.org/?format=json", {
-      proxy: {
-        protocol: "http",
-        host: "163.116.177.43",
-        port: 808,
-      },
-    })
-    .then((res) => {
-      console.log(res.data);
-    })
-    .catch((err) => console.error(err));
+  getReq("/", "163.116.177.43", 808);
 
   res.render("index");
 });
